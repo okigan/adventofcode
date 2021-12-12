@@ -1,7 +1,9 @@
 #! /usr/bin/env python
 
 from collections import defaultdict, deque
+from itertools import product
 import re
+
 
 def main():
     edges = []
@@ -20,17 +22,17 @@ def main():
         adj[e] += [s]
 
     paths = []
-    candidates = deque([(['start'], set(['start']))])
+    candidates = deque([['start']])
     while candidates:
-        candidate, ss = candidates.popleft()
+        candidate = candidates.popleft()
         head = candidate[-1]
 
         if head == 'end':
             paths += [candidate]
         else:
             for nnn in adj[head]:
-                if nnn not in candidate or nnn.isupper():
-                    candidates += [(candidate + [nnn], ss | {nnn})]
+                if nnn.isupper() or nnn not in candidate:
+                    candidates += [candidate + [nnn]]
 
     return len(paths)
 

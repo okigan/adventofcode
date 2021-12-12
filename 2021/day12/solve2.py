@@ -37,8 +37,8 @@ def main():
                 if check_path(path + [n]):
                     q.append((n, path + [n]))
 
-    for p in paths:
-        print(p)
+    # for p in paths:
+    #     print(p)
     return len(paths)
 
 
