@@ -46,8 +46,7 @@ def main():
             if (r,c) not in visited:
                 counted += 1
                 visited.add((r,c))
-                coords = [(r + 1, c + 0), (r - 1, c + 0),(r + 0, c + 1), (r + 0, c - 1)]
-                for rr, cc in coords:
+                for rr, cc in [(r + 1, c + 0), (r - 1, c + 0),(r + 0, c + 1), (r + 0, c - 1)]:
                     if rr >= 0 and rr < len(heigh_map):
                         if cc >= 0 and cc < len(heigh_map[0]):
                             if heigh_map[rr][cc] != 9:
