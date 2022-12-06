@@ -23,9 +23,9 @@ def main():
         "A": 1,
         "B": 2,
         "C": 3,
-        "X": 1,
-        "Y": 2,
-        "Z": 3,
+        "X": 1, # lose
+        "Y": 2, # draw
+        "Z": 3, # win
     }
 
     eq_map = {
@@ -40,13 +40,25 @@ def main():
         "C": "X",
     }
 
+    loseif = {
+        "A": "C",
+        "B": "A",
+        "C": "B",
+    }
+
     for k,v in data:
         curr_score = 0
-        curr_score += scoring[v]
-        if v == winif[k]:
-            curr_score += 6
-        elif eq_map[k] == v:
+        use = ''
+        if v == "X": # lose
+            use = loseif[k]
+        elif v == "Y": # draw
+            use = k
             curr_score += 3
+        else: #win
+            use = winif[k]
+            curr_score += 6
+
+        curr_score += scoring[use]
         
         score += curr_score
         
