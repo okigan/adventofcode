@@ -19,7 +19,7 @@ def adjust(hx, hy, tx, ty):
         dy = (hy - ty)
         dx = (hx - tx)
 
-    return tx + dx//max(1, abs(dx)), ty + dy//max(1, abs(dy))
+    return (tx + dx//max(1, abs(dx)), ty + dy//max(1, abs(dy)))
 
 def main():
     moves = []
@@ -52,7 +52,7 @@ def main():
             print("should not be here")
 
         for _ in range(count):
-            knots[0] = knots[0][0] + ix, knots[0][1] + iy
+            knots[0] = (knots[0][0] + ix, knots[0][1] + iy)
             for i in range (1, len(knots)):
                 hx, hy = knots[i - 1]
                 tx, ty = knots[i]
