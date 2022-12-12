@@ -43,7 +43,7 @@ def find_path(maze:dict, start, end):
         if current == end:
             return depth
 
-        if current in visited and visited[current] >= depth:
+        if current in visited and visited[current] <= depth:
             continue
 
         visited[current] = depth
