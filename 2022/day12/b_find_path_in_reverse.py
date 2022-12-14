@@ -1,13 +1,12 @@
 #! env python
 
+from ast import Dict, Tuple
 from itertools import *
 from functools import *
 from collections import *
 from heapq import *
-import math
 
 import os
-import random 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -21,31 +20,28 @@ def main():
         for line in f.readlines():
             line = line.strip()
             for idx, c in enumerate(line):
-                maze[(count, idx)] = ord(c) - ord('a')
+                maze[(count, idx)] = ord(c)
                 if c == 'S':
                     start = (count, idx)
-                    maze[(count, idx)] = ord('a') - ord('a')
+                    maze[(count, idx)] = ord('a')
                     starts += [((count, idx))]
                 elif c == 'E':
                     end = (count, idx)
-                    maze[(count, idx)] = ord('z') - ord('a')
+                    maze[(count, idx)] = ord('z')
                 elif c == 'a':
                     starts += [((count, idx))]
             count += 1
 
-    print(find_path(maze, start, end))
-    # distances = []
-    # for start in starts:
-    #     distances += [find_path(maze, start, end)]
-    
-    # print(min(filter(lambda x: x is not None, distances)))
+    for s in [end]:
+        print(find_path(maze, s, set(starts)))
 
-def find_path(maze:dict, start, end):
-    visited, q = {}, deque([(0, start)])
+def find_path(maze:Dict, start, ends):
+    visited: dict = {}
+    q: list  = [(0, [], start)]
 
     while q:
-        depth, current = q.popleft()
-        if current == end:
+        depth, prior, current = heappop(q)
+        if current in ends:
             return depth
 
         if current in visited and visited[current] <= depth:
@@ -58,15 +54,10 @@ def find_path(maze:dict, start, end):
             if child in visited and visited[child] <= depth:
                 continue
             if is_valid_move(maze, current, child):
-                q += [(depth + 1, child)]
-
-def new_func(visited, depth, current):
-    return current in visited and visited[current] <= depth
-    
-    # print('not found for', start, end)
+                heappush(q, (depth + 1, prior + [current], child))
 
 def is_valid_move(maze, current, child):
-    return child in maze and maze[child] - maze[current] <= 1
+    return child in maze and maze[current] - maze[child] < 2
 
 def distance(a, b):
     # return 0
